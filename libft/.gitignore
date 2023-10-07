@@ -1,0 +1,9 @@
+/libft-unit-test
+
+*.o
+*.out
+*.a
+*.swp
+.DS_Store
+
+
