@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   atol.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bargarci <bargarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 20:57:52 by bargarci          #+#    #+#             */
-/*   Updated: 2023/04/17 20:57:59 by bargarci         ###   ########.fr       */
+/*   Created: 2023/08/29 07:41:39 by bargarci          #+#    #+#             */
+/*   Updated: 2023/08/29 07:41:45 by bargarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+long	ft_atol(const char *str)
 {
-	t_list	*nodo;
-	size_t	i;
+	int		i;
+	long	sg;
+	long	nb;
 
 	i = 0;
-	nodo = lst;
-	while (nodo != NULL)
+	sg = 1;
+	nb = 0;
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
 	{
-		nodo = nodo->next;
 		i++;
 	}
-	return (i);
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sg = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = (nb * 10) + (str[i] - '0');
+		i++;
+	}
+	return (sg * nb);
 }

@@ -51,7 +51,7 @@ char	**ft_free(char **str, int j)
 
 	i = 0;
 	while (i < j)
-	{	
+	{
 		free(str[i]);
 		i++;
 	}

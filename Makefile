@@ -9,31 +9,30 @@ LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF_DIR = ft_printf
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
+all: $(NAME)
+
 $(NAME): $(OBJ) $(PRINTF) $(LIBFT)
 	$(CC) $(CFLAGS) $(SRC) $(LIBFT) $(PRINTF) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(PRINTF):
-	make -C $(PRINTF_DIR)
-
 $(LIBFT):
 	make bonus -C $(LIBFT_DIR)
 
-all: $(NAME)
+$(PRINTF):
+	make -C $(PRINTF_DIR)
 
 clean:
 	$(RM) $(OBJ)
-	make clean -C $(PRINTF_DIR)
-	make clean -C $(LIBFT_DIR)
+	$(MAKE) clean -C $(PRINTF_DIR)
+	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C $(PRINTF_DIR)
-	make fclean -C $(LIBFT_DIR)
+	$(MAKE) fclean -C $(PRINTF_DIR)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: re fclean clean all 
-
+.PHONY: re fclean clean all new  
