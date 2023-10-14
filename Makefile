@@ -1,8 +1,8 @@
 NAME = pipex
-SRC = pipex.c
+SRC = pipex.c parse.c childs.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -fsanitize=address -g3 -Wall -Werror -Wextra
 RM = rm -rf
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
