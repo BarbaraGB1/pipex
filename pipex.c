@@ -14,7 +14,7 @@ int main (int argc, char **argv, char **env)
 	pipex.fd_txt = fd_txt;
 	pipex.fd = fd;
 
-	if (argc < 3)
+	if (argc < 5)
 		printf("argumentos insuficientes\n");
 	parse(&pipex);
 	fd_txt_dir(&pipex);

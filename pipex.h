@@ -17,12 +17,14 @@ typedef struct s_pipex
 	char	*path;
 	int		*fd_txt;
 	int		*fd;
-} t_struct;
+}	t_struct;
 
 void	parse(t_struct *pipex);
 char	*rute_parse(char *argv, t_struct pipex);
 void	first_child(t_struct pipex);
 void	second_child(t_struct pipex);
 void	fd_txt_dir(t_struct *pipex);
+int		absolut_rute(char *argv);
+char	*search_cmd_name(char *argv);
 
 #endif 
