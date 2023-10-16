@@ -1,5 +1,6 @@
 #include "libft/libft.h"
 #include "pipex.h"
+#include <stdio.h>
 
 void	fd_txt_dir(t_struct *pipex)
 {
@@ -32,8 +33,9 @@ char	*search_cmd_name(char *argv)
 	do_split = ft_split(argv, '/');
 	while (do_split[i])
 		i++;
-	cmd = do_split[i -1];
-	free(do_split);
+	cmd = do_split[i - 1];
+	printf("El resultado de search_name es : %s\n", cmd);
+//free(do_split);
 	return (cmd);
 }
 char	*rute_parse(char *argv, t_struct pipex)

@@ -38,7 +38,8 @@ int main (int argc, char **argv, char **env)
 	if (pid[1] == 0 )
 		second_child(pipex);
 	waitpid(pid[0], &status, 0);
-	exit(1);
+//	waitpid(pid[1], &status, 0);
+//	exit(1);
 //		waitpid(pid[1], &status, 0);
 	return (0);
 
