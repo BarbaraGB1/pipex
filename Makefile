@@ -1,8 +1,8 @@
 NAME = pipex
-SRC = pipex.c parse.c childs.c
+SRC = main.c parse.c childs.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
-CFLAGS = -fsanitize=address -g3 -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 RM = rm -rf
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -24,7 +24,7 @@ $(PRINTF):
 	make -C $(PRINTF_DIR)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) pipex.dSYM
 	$(MAKE) clean -C $(PRINTF_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 
@@ -34,5 +34,9 @@ fclean: clean
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
+
+#sanitize: CFLAGS += -fsanitize=address
+sanitize: CFLAGS += -g3
+sanitize: re
 
 .PHONY: re fclean clean all new  
