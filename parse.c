@@ -13,18 +13,21 @@
 #include "pipex.h"
 #include <stdio.h>
 
+
 int	absolut_rute(char *argv)
 {
-	if (check_rute(argv))
-	{
-		return (1);
-	}
-	else if (!ft_strncmp(argv, "../", 3))
+	if (!ft_strncmp(argv, "../", 3))
 		return (1);
 	else if (!ft_strncmp(argv, "./", 2))
 		return (1);
 	else if (!ft_strncmp(argv, "/", 1))
 		return (1);
+	else if (check_rute(argv))
+	{
+		if (ft_stchr(argv, '/') < 1)
+			return (0);
+		return (1);
+	}
 	else
 		return (0);
 }
@@ -50,7 +53,8 @@ char	*check_rute(char *check)
 		return (check);
 	}
 	return (0);
-}	
+}
+
 
 char	*rute_parse(char *argv, t_struct *pipex)
 {
@@ -62,6 +66,7 @@ char	*rute_parse(char *argv, t_struct *pipex)
 	{
 		if (check_rute(cmd[0]))
 			return (cmd[0]);
+
 		return (0);
 	}
 	if (!*pipex->env)

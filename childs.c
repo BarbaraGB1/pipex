@@ -74,3 +74,23 @@ char	*find_rutes(t_struct *pipex, char **cmd)
 	}
 	return (0);
 }
+
+int		ft_stchr(const char *s, int	c)
+{
+	int		i;
+	char	a;
+	char	*b;
+	int		j;
+
+	i = 0;
+	j = 0;
+	a = (char)c;
+	b = (char *)s;
+	while (b[i] != '\0')
+	{
+		if (b[i] == a)
+			j++;
+		i++;
+	}
+	return (j);
+}

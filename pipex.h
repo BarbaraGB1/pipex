@@ -43,5 +43,6 @@ char	*check_rute(char *check);
 void	errors(char *s);
 void	errors_manual(char *s);
 char	*find_rutes(t_struct *pipex, char **cmd);
+int		ft_stchr(const char *s, int	c);
 
 #endif 
