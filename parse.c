@@ -13,9 +13,9 @@
 #include "pipex.h"
 #include <stdio.h>
 
-
 int	absolut_rute(char *argv)
 {
+	printf("estoy en ruta absoluta\n");
 	if (!ft_strncmp(argv, "../", 3))
 		return (1);
 	else if (!ft_strncmp(argv, "./", 2))
@@ -55,18 +55,17 @@ char	*check_rute(char *check)
 	return (0);
 }
 
-
 char	*rute_parse(char *argv, t_struct *pipex)
 {
 	char	*check;
 	char	**cmd;
 
 	cmd = ft_split(argv, ' ');
+	printf("en rute_parse el resultado del split es: %s\n", cmd[0]);
 	if (absolut_rute(cmd[0]))
 	{
 		if (check_rute(cmd[0]))
 			return (cmd[0]);
-
 		return (0);
 	}
 	if (!*pipex->env)
@@ -77,6 +76,7 @@ char	*rute_parse(char *argv, t_struct *pipex)
 	parse(pipex);
 	if (find_rutes(pipex, cmd))
 	{
+		printf("estoy en ruta comando: %s\n", cmd[0]);
 		check = find_rutes(pipex, cmd);
 		return (check);
 	}

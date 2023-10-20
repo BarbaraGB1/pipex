@@ -19,25 +19,14 @@ void	fd_txt_dir(t_struct *pipex)
 	char	*salida;
 
 	entrada = pipex->argv[1];
-	salida = pipex->argv[4];
+	salida = pipex->argv[pipex->argv_count];
+	printf("argv salida %s\n", salida);
 	pipex->fd_txt[0] = open(entrada, O_RDONLY);
 	if (pipex->fd_txt[0] == -1)
 		errors("open input");
 	pipex->fd_txt[1] = open(salida, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->fd_txt[0] == -1)
 		errors("open output");
-}
-
-void	errors_manual(char *s)
-{
-	ft_putstr_fd(s, 2);
-	exit(errno);
-}
-
-void	errors(char *s)
-{
-	perror(s);
-	exit(errno);
 }
 
 void	pipes(t_struct *pipex)
@@ -48,12 +37,22 @@ void	pipes(t_struct *pipex)
 	if (pipex->pid[0] == -1)
 		errors("pid");
 	if (pipex->pid[0] == 0)
-		first_child(*pipex);
+		first_child(*pipex, pipex->argv[2]);
 	pipex->pid[1] = fork();
 	if (pipex->pid[1] == -1)
 		errors("pid1");
 	if (pipex->pid[1] == 0)
-		second_child(*pipex);
+		second_child(*pipex, pipex->argv[3]);
+}
+
+int	count_argv(char **argv, int a)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+		i++;
+	return (i - a);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -63,20 +62,38 @@ int	main(int argc, char **argv, char **env)
 	int			fd_txt[2];
 	int			fd[2];
 	int			status;
+	int			i = 0;
+	pid_t			child;
 
 	pipex.argv = argv;
 	pipex.env = env;
 	pipex.fd_txt = fd_txt;
 	pipex.fd = fd;
 	pipex.pid = pid;
+	pipex.argv_count = count_argv(argv, 1);
 	if (argc < 5)
 		errors_manual("invalid number of arguments\n");
 	fd_txt_dir(&pipex);
-	pipes(&pipex);
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid[0], &status, 0);
-	waitpid(pid[1], &status, 0);
+	if (argc == 5)
+	{
+		pipes(&pipex);
+		close(fd[0]);
+		close(fd[1]);
+		waitpid(pid[0], &status, 0);
+		waitpid(pid[1], &status, 0);
+	}
+	if (argc > 5)
+	{
+		child = multiples_pipes(&pipex);
+		while (pipex.fd_mul[i])
+		{
+			close(pipex.fd_mul[i][0]);
+			close(pipex.fd_mul[i][1]);
+			i++;
+		}
+		printf("traspaso el cierre de los fd");
+		wait_child_pid(child);
+	}
 	exit(1);
 	return (0);
 }
