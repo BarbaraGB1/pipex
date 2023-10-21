@@ -91,9 +91,11 @@ int	main(int argc, char **argv, char **env)
 			close(pipex.fd_mul[i][1]);
 			i++;
 		}
+		close(pipex.fd_txt[0]);
+		close(pipex.fd_txt[1]);
 		printf("traspaso el cierre de los fd");
 		wait_child_pid(child);
 	}
-	exit(1);
+	exit(0);
 	return (0);
 }

@@ -4,37 +4,27 @@
 int		multiples_pipes(t_struct *pipex)
 {
 	build_mul_fd(pipex);
-//	build_mul_pipes(*pipex);	
 	int	i;
 	int j;
 	pid_t child;
-	int	 q;
 
 	i = 2;
 	j = 0;
 	if (pipe(pipex->fd_mul[j]) == -1)
 		errors("pipe");
 	first_child_mul(*pipex, pipex->argv[i], j);
-	j++;
 	i++;
 	printf("esto es el numero de argv en el hijo first: %i\n estoy es el numero de fd: %i\n", i, j);
 	while (i < (pipex->argv_count + 2))
 	{
+		j++;
 		if (pipe(pipex->fd_mul[j]) == -1)
 			errors("pipe");
 		mid_child_mul(*pipex, pipex->argv[i], j);
-		printf("estoy por aquii chiquillo , viendolas venir baby\n");
-		q = i - j;
-		if (j < (pipex->argv_count - 1))
-			j++;
 		i++;
 		printf("esto es el numero de argv: %i\n estoy es el numero de fd: %i\n", i, j);
 	}
-	if (pipe(pipex->fd_mul[j]) == -1)
-		errors("pipe");
-	printf("estoy por aqui , viendolas venir baby");
 	child = last_child_mul(*pipex, pipex->argv[i], j);
-	exit(1);
 	return (child);
 }
 
