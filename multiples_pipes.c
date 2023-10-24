@@ -1,83 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multiples_pipes.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bargarci <bargarci@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/24 04:47:59 by bargarci          #+#    #+#             */
+/*   Updated: 2023/10/24 04:48:06 by bargarci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "pipex.h"
 #include <stdio.h>
 
-int		multiples_pipes(t_struct *pipex)
+void	multiples_pipes(t_struct *pipex)
 {
-	build_mul_fd(pipex);
 	int	i;
-	int j;
-	pid_t child;
+	int	fd_firstchild[2];
 
 	i = 2;
-	j = 0;
-	if (pipe(pipex->fd_mul[j]) == -1)
+	fd_txt_dir(pipex);
+	if (pipe(fd_firstchild) == -1)
 		errors("pipe");
-	first_child_mul(*pipex, pipex->argv[i], j);
+	first_child_mul(*pipex, pipex->argv[i], fd_firstchild);
+	close(fd_firstchild[1]);
 	i++;
-	printf("esto es el numero de argv en el hijo first: %i\n estoy es el numero de fd: %i\n", i, j);
-	while (i < (pipex->argv_count + 2))
+	goto_middle(pipex, fd_firstchild, i);
+	close(fd_firstchild[0]);
+}
+
+void	goto_middle(t_struct *pipex, int *fd_firstchild, int i)
+{
+	int	fd_secondchild[2];
+	int	fd_2[2];
+
+	while (i < (pipex->argv_count - 1))
 	{
-		j++;
-		if (pipe(pipex->fd_mul[j]) == -1)
+		if (pipe(fd_secondchild) == -1)
 			errors("pipe");
-		mid_child_mul(*pipex, pipex->argv[i], j);
-		i++;
-		printf("esto es el numero de argv: %i\n estoy es el numero de fd: %i\n", i, j);
-	}
-	child = last_child_mul(*pipex, pipex->argv[i], j);
-	return (child);
-}
-
-int	build_mul_pipes(t_struct pipex)
-{
-	int	i;
-
-	i = 0;
-	while (pipex.fd_mul[i])
-	{
-		if (pipe(pipex.fd_mul[i]) == -1)
-			return (0);
+		if (i == 3)
+			mid_child_mul(*pipex, pipex->argv[i],
+				fd_firstchild, fd_secondchild);
+		else
+			mid_child_mul(*pipex, pipex->argv[i], fd_2, fd_secondchild);
+		fd_2[0] = fd_secondchild[0];
+		fd_2[1] = fd_secondchild[1];
 		i++;
 	}
-	return (0);
-}
-
-void	build_mul_fd(t_struct *pipex)
-{
-	int	**fd_mul;
-	int	i;
-
-	i = 0;
-	pipex->argv_count = count_argv(pipex->argv, 4);
-	fd_mul = malloc(sizeof(int *) * (pipex->argv_count + 1));
-	if (!fd_mul)
-		return ;
-	while (i < pipex->argv_count)
-	{
-		fd_mul[i] = malloc(sizeof(int) * 2);
-		if (!fd_mul[i])
-			ft_free_pipex(fd_mul, i);
-		i++;
-	}
-	fd_mul[i] = 0;
-	pipex->fd_mul = fd_mul;
-}
-
-void	wait_child_pid(pid_t child)
-{
-	int status;
-	int pid;
-	int	exit_status;
-
-	pid = 1;
-	while (pid != -1)
-	{
-		pid = waitpid(-1, &status, 0);
-		if (pid == child)
-		{
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
-		}
-	}
-	exit(exit_status);
+	last_child_mul(*pipex, pipex->argv[i], fd_secondchild);
 }

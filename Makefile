@@ -26,7 +26,7 @@ $(PRINTF):
 	make -C $(PRINTF_DIR)
 
 clean:
-	$(RM) $(OBJ) pipex.dSYM
+	$(RM) $(OBJ) pipex.dSYM ./pipex
 	$(MAKE) clean -C $(PRINTF_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 

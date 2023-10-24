@@ -20,7 +20,6 @@ void	fd_txt_dir(t_struct *pipex)
 
 	entrada = pipex->argv[1];
 	salida = pipex->argv[pipex->argv_count];
-	printf("argv salida %s\n", salida);
 	pipex->fd_txt[0] = open(entrada, O_RDONLY);
 	if (pipex->fd_txt[0] == -1)
 		errors("open input");
@@ -31,6 +30,7 @@ void	fd_txt_dir(t_struct *pipex)
 
 void	pipes(t_struct *pipex)
 {
+	fd_txt_dir(pipex);
 	if (pipe(pipex->fd) == -1)
 		errors("pipe");
 	pipex->pid[0] = fork();
@@ -62,8 +62,6 @@ int	main(int argc, char **argv, char **env)
 	int			fd_txt[2];
 	int			fd[2];
 	int			status;
-	int			i = 0;
-	pid_t			child;
 
 	pipex.argv = argv;
 	pipex.env = env;
@@ -73,7 +71,6 @@ int	main(int argc, char **argv, char **env)
 	pipex.argv_count = count_argv(argv, 1);
 	if (argc < 5)
 		errors_manual("invalid number of arguments\n");
-	fd_txt_dir(&pipex);
 	if (argc == 5)
 	{
 		pipes(&pipex);
@@ -83,19 +80,6 @@ int	main(int argc, char **argv, char **env)
 		waitpid(pid[1], &status, 0);
 	}
 	if (argc > 5)
-	{
-		child = multiples_pipes(&pipex);
-		while (pipex.fd_mul[i])
-		{
-			close(pipex.fd_mul[i][0]);
-			close(pipex.fd_mul[i][1]);
-			i++;
-		}
-		close(pipex.fd_txt[0]);
-		close(pipex.fd_txt[1]);
-		printf("traspaso el cierre de los fd");
-		wait_child_pid(child);
-	}
+		multiples_pipes(&pipex);
 	exit(0);
-	return (0);
 }

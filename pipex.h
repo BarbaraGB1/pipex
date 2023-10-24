@@ -28,9 +28,10 @@ typedef struct s_pipex
 	char	*path;
 	int		*fd_txt;
 	int		*fd;
-	int		**fd_mul;
 	pid_t	*pid;
 	int		argv_count;
+	char	*cmd_rute;
+	char	**cmd_name;
 }	t_struct;
 
 void	parse(t_struct *pipex);
@@ -47,13 +48,14 @@ void	errors_manual(char *s);
 char	*find_rutes(t_struct *pipex, char **cmd);
 int		ft_stchr(const char *s, int c);
 int		count_argv(char **argv, int a);
-int		multiples_pipes(t_struct *pipex);
+void	multiples_pipes(t_struct *pipex);
 int		build_mul_pipes(t_struct pipex);
 int		**ft_free_pipex(int **str, int j);
 void	build_mul_fd(t_struct *pipex);
-void	mid_child_mul(t_struct pipex, char *argv, int j);
-void	first_child_mul(t_struct pipex, char *argv, int j);
-int		last_child_mul(t_struct pipex, char *argv, int j);
-void	wait_child_pid(pid_t child);
+void	mid_child_mul(t_struct pipex, char *argv, int *fd, int *fd1);
+void	first_child_mul(t_struct pipex, char *argv, int *fd);
+void	last_child_mul(t_struct pipex, char *argv, int *fd1);
+void	rute_cmd(t_struct *pipex, char *argv);
+void	goto_middle(t_struct *pipex, int *fd_firstchild, int i);
 
 #endif 
