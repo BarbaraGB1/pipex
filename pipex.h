@@ -13,6 +13,7 @@
 # define PIPEX_H
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
+# include "./GNL/get_next_line.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -26,9 +27,9 @@ typedef struct s_pipex
 	char	**env;
 	char	**rutes;
 	char	*path;
-	int		*fd_txt;
-	int		*fd;
-	pid_t	*pid;
+	int		fd_txt[2];
+	int		fd[2];
+	pid_t	pid[2];
 	int		argv_count;
 	char	*cmd_rute;
 	char	**cmd_name;
@@ -56,6 +57,7 @@ void	mid_child_mul(t_struct pipex, char *argv, int *fd, int *fd1);
 void	first_child_mul(t_struct pipex, char *argv, int *fd);
 void	last_child_mul(t_struct pipex, char *argv, int *fd1);
 void	rute_cmd(t_struct *pipex, char *argv);
-void	goto_middle(t_struct *pipex, int *fd_firstchild, int i);
+void	goto_middle(t_struct *pipex, int *fd_firstchild, int i, int j);
+int		check_heredoc(t_struct *pipex);
 
 #endif 

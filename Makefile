@@ -1,5 +1,5 @@
 NAME = pipex
-SRC = main.c parse.c childs.c errors.c multiples_pipes.c multiples_childs.c
+SRC = main.c parse.c childs.c errors.c multiples_pipes.c multiples_childs.c ./GNL/get_next_line.c ./GNL/get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
@@ -7,7 +7,7 @@ RM = rm -rf
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF_DIR = ft_printf
-PRINTF = $(PRINTF_DIR)/libftprintf.a
+PRINTF = $(PRINTF_DIR)/libftprintf.a 
 
 TARGET = all
 

@@ -9,6 +9,7 @@
 /*   Updated: 2023/10/24 04:48:06 by bargarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft/libft.h"
 #include "pipex.h"
 #include <stdio.h>
 
@@ -16,19 +17,29 @@ void	multiples_pipes(t_struct *pipex)
 {
 	int	i;
 	int	fd_firstchild[2];
+	int	j;
 
-	i = 2;
+	if (!ft_strncmp(pipex->argv[1], "here_doc", 7))
+	{
+		i = 3;
+		j = 4;
+	}
+	else
+	{
+		i = 2;
+		j = 3;
+	}
 	fd_txt_dir(pipex);
 	if (pipe(fd_firstchild) == -1)
 		errors("pipe");
 	first_child_mul(*pipex, pipex->argv[i], fd_firstchild);
 	close(fd_firstchild[1]);
 	i++;
-	goto_middle(pipex, fd_firstchild, i);
+	goto_middle(pipex, fd_firstchild, i, j);
 	close(fd_firstchild[0]);
 }
 
-void	goto_middle(t_struct *pipex, int *fd_firstchild, int i)
+void	goto_middle(t_struct *pipex, int *fd_firstchild, int i, int j)
 {
 	int	fd_secondchild[2];
 	int	fd_2[2];
@@ -37,7 +48,7 @@ void	goto_middle(t_struct *pipex, int *fd_firstchild, int i)
 	{
 		if (pipe(fd_secondchild) == -1)
 			errors("pipe");
-		if (i == 3)
+		if (i == j)
 			mid_child_mul(*pipex, pipex->argv[i],
 				fd_firstchild, fd_secondchild);
 		else
