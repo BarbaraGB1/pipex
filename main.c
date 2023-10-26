@@ -37,7 +37,7 @@ void	fd_txt_dir(t_struct *pipex)
 }
 
 void	pipes(t_struct *pipex)
-{
+{ /* MIRAR ARGUMENTOS CON HEREDOC */
 	fd_txt_dir(pipex);
 	if (pipe(pipex->fd) == -1)
 		errors("pipe");
