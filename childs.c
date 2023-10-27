@@ -20,8 +20,9 @@ void	first_child(t_struct pipex, char *argv)
 	dup2(pipex.fd[1], 1);
 	close(pipex.fd[1]);
 	execve(pipex.cmd_rute, pipex.cmd_name, pipex.env);
-	perror(pipex.cmd_name[0]);
-	exit(errno);
+	errors(pipex.cmd_name[0]);
+	free(pipex.cmd_rute);
+	ft_free_pipex(pipex.cmd_name);
 }
 
 void	second_child(t_struct pipex, char *argv)
@@ -32,6 +33,7 @@ void	second_child(t_struct pipex, char *argv)
 	close(pipex.fd[1]);
 	close(pipex.fd[0]);
 	execve(pipex.cmd_rute, pipex.cmd_name, pipex.env);
-	perror(pipex.cmd_name[0]);
-	exit(errno);
+	errors(pipex.cmd_name[0]);
+	free(pipex.cmd_rute);
+	ft_free_pipex(pipex.cmd_name);
 }

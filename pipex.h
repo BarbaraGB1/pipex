@@ -53,7 +53,7 @@ int		ft_stchr(const char *s, int c);
 int		count_argv(char **argv, int a);
 void	multiples_pipes(t_struct *pipex);
 int		build_mul_pipes(t_struct pipex);
-int		**ft_free_pipex(int **str, int j);
+int		**ft_free_pipex(char **str);
 void	build_mul_fd(t_struct *pipex);
 void	mid_child_mul(t_struct pipex, char *argv, int *fd, int *fd1);
 void	first_child_mul(t_struct pipex, char *argv, int *fd);

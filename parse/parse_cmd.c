@@ -19,8 +19,11 @@ char	*search_cmd_name(char *argv)
 
 	i = 0;
 	do_split = ft_split(argv, '/');
-	if(!do_split)
+	if (!do_split)
+	{
+		ft_free_pipex(do_split);
 		return (0);
+	}
 	while (do_split[i])
 		i++;
 	cmd = do_split[i - 1];
@@ -31,7 +34,7 @@ void	rute_cmd(t_struct *pipex, char *argv)
 {
 	char	*cmd;
 
-	if(!check_good_argv(argv))
+	if (!check_good_argv(argv))
 		errors_manual("Command not found: ", argv);
 	pipex->cmd_rute = rute_parse(argv, pipex);
 	if (absolut_rute(argv))
@@ -39,13 +42,19 @@ void	rute_cmd(t_struct *pipex, char *argv)
 		cmd = search_cmd_name(argv);
 		pipex->cmd_name = ft_split(cmd, ' ');
 		if (!pipex->cmd_name)
+		{
+			ft_free_pipex(pipex->cmd_name);
 			return ;
+		}		
 	}
 	else
 	{
 		pipex->cmd_name = ft_split(argv, ' ');
 		if (!pipex->cmd_name)
+		{
+			ft_free_pipex(pipex->cmd_name);
 			return ;
+		}
 	}
 }
 
@@ -65,12 +74,15 @@ void	parse(t_struct *pipex)
 	}
 	pipex->rutes = ft_split(pipex->path + 5, ':');
 	if (!pipex->rutes)
+	{
+		ft_free_pipex(pipex->rutes);
 		return ;
+	}
 }
 
 int	check_good_argv(char *argv)
 {
-	if (!ft_isalpha(argv[0]))
+	if (argv[0] == ' ')
 		return (0);
 	return (1);
 }

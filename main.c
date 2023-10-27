@@ -12,6 +12,7 @@
 #include "libft/libft.h"
 #include "pipex.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/fcntl.h>
 
 int	fd_txt_dir(t_struct *pipex)
@@ -68,12 +69,12 @@ int	check_heredoc(t_struct *pipex)
 		return (1);
 }
 
-int	**ft_free_pipex(int **str, int j)
+int	**ft_free_pipex(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (i < j)
+	while (str[i])
 	{
 		free(str[i]);
 		i++;
@@ -113,7 +114,7 @@ int	main(int argc, char **argv, char **env)
 	pipex.env = env;
 	pipex.argv_count = count_argv(argv, 1);
 	if (argc < 5)
-		errors_manual("invalid number of arguments" , "\n");
+		errors_manual("invalid number of arguments", "\n");
 	count_argc(&pipex);
 	fd_txt_dir(&pipex);
 	if (argc == pipex.argc_one)

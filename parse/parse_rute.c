@@ -49,10 +49,16 @@ char	*find_rutes(t_struct *pipex, char **cmd)
 	{
 		check = ft_strjoin(pipex->rutes[i], "/");
 		if (!check)
+		{
+			free(check);
 			return (0);
+		}
 		check = ft_strjoin(check, cmd[0]);
 		if (!check)
+		{
+			free(check);
 			return (0);
+		}
 		if (check_rute(check))
 			return (check);
 		i++;
@@ -67,7 +73,10 @@ char	*rute_parse(char *argv, t_struct *pipex)
 
 	cmd = ft_split(argv, ' ');
 	if (!cmd || !cmd[0])
+	{
+		ft_free_pipex(cmd);
 		return (0);
+	}
 	if (absolut_rute(cmd[0]))
 	{
 		if (check_rute(cmd[0]))
@@ -92,6 +101,9 @@ char	*aux_noenv(char *cmd)
 
 	check = ft_strjoin("./", cmd);
 	if (!check)
+	{
+		free(check);
 		return (0);
+	}
 	return (check);
 }
