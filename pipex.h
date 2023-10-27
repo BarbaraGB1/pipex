@@ -33,6 +33,8 @@ typedef struct s_pipex
 	int		argv_count;
 	char	*cmd_rute;
 	char	**cmd_name;
+	int		argc_one;
+	int		argc_mul;
 }	t_struct;
 
 void	parse(t_struct *pipex);
@@ -40,12 +42,12 @@ char	*rute_parse(char *argv, t_struct *pipex);
 void	pipes(t_struct *pipex);
 void	first_child(t_struct pipex, char *argv);
 void	second_child(t_struct pipex, char *argv);
-void	fd_txt_dir(t_struct *pipex);
+int		fd_txt_dir(t_struct *pipex);
 int		absolut_rute(char *argv);
 char	*search_cmd_name(char *argv);
 char	*check_rute(char *check);
 void	errors(char *s);
-void	errors_manual(char *s);
+void	errors_manual(char *s, char *argv);
 char	*find_rutes(t_struct *pipex, char **cmd);
 int		ft_stchr(const char *s, int c);
 int		count_argv(char **argv, int a);
@@ -59,5 +61,8 @@ void	last_child_mul(t_struct pipex, char *argv, int *fd1);
 void	rute_cmd(t_struct *pipex, char *argv);
 void	goto_middle(t_struct *pipex, int *fd_firstchild, int i, int j);
 int		check_heredoc(t_struct *pipex);
+void	count_argc(t_struct *pipex);
+char	*aux_noenv(char *cmd);
+int		check_good_argv(char *argv);
 
 #endif 

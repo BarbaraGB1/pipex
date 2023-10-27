@@ -6,11 +6,10 @@
 /*   By: bargarci <bargarci@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 20:51:33 by bargarci          #+#    #+#             */
-/*   Updated: 2023/10/16 20:51:38 by bargarci         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:30:02 by bargarci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
-#include "pipex.h"
+#include "../pipex.h"
 #include <stdio.h>
 
 int	absolut_rute(char *argv)
@@ -31,25 +30,32 @@ int	absolut_rute(char *argv)
 		return (0);
 }
 
-char	*search_cmd_name(char *argv)
-{
-	char	**do_split;
-	int		i;
-	char	*cmd;
-
-	i = 0;
-	do_split = ft_split(argv, '/');
-	while (do_split[i])
-		i++;
-	cmd = do_split[i - 1];
-	return (cmd);
-}
-
 char	*check_rute(char *check)
 {
 	if (access(check, F_OK) == 0)
 	{
 		return (check);
+	}
+	return (0);
+}
+
+char	*find_rutes(t_struct *pipex, char **cmd)
+{
+	char	*check;
+	int		i;
+
+	i = 0;
+	while (pipex->rutes[i])
+	{
+		check = ft_strjoin(pipex->rutes[i], "/");
+		if (!check)
+			return (0);
+		check = ft_strjoin(check, cmd[0]);
+		if (!check)
+			return (0);
+		if (check_rute(check))
+			return (check);
+		i++;
 	}
 	return (0);
 }
@@ -60,6 +66,8 @@ char	*rute_parse(char *argv, t_struct *pipex)
 	char	**cmd;
 
 	cmd = ft_split(argv, ' ');
+	if (!cmd || !cmd[0])
+		return (0);
 	if (absolut_rute(cmd[0]))
 	{
 		if (check_rute(cmd[0]))
@@ -67,33 +75,23 @@ char	*rute_parse(char *argv, t_struct *pipex)
 		return (0);
 	}
 	if (!*pipex->env)
-	{
-		check = ft_strjoin("./", cmd[0]);
-		return (check);
-	}
+		return (aux_noenv(cmd[0]));
 	parse(pipex);
 	if (find_rutes(pipex, cmd))
 	{
 		check = find_rutes(pipex, cmd);
 		return (check);
 	}
-	errors_manual("command not found\n");
+	errors_manual("command not found: ", cmd[0]);
 	return (0);
 }
 
-void	parse(t_struct *pipex)
+char	*aux_noenv(char *cmd)
 {
-	int		i;
+	char	*check;
 
-	i = 0;
-	while (pipex->env[i])
-	{
-		if (!ft_strncmp(pipex->env[i], "PATH=", 5))
-		{
-			pipex->path = pipex->env[i];
-			break ;
-		}
-		i++;
-	}
-	pipex->rutes = ft_split(pipex->path + 5, ':');
+	check = ft_strjoin("./", cmd);
+	if (!check)
+		return (0);
+	return (check);
 }

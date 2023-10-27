@@ -1,5 +1,5 @@
 NAME = pipex
-SRC = main.c parse.c childs.c errors.c multiples_pipes.c multiples_childs.c ./GNL/get_next_line.c ./GNL/get_next_line_utils.c
+SRC = main.c ./parse/parse_rute.c ./parse/parse_cmd.c childs.c utils.c multiples_pipes.c multiples_childs.c ./GNL/get_next_line.c ./GNL/get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra

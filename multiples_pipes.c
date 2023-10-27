@@ -29,7 +29,6 @@ void	multiples_pipes(t_struct *pipex)
 		i = 2;
 		j = 3;
 	}
-	fd_txt_dir(pipex);
 	if (pipe(fd_firstchild) == -1)
 		errors("pipe");
 	first_child_mul(*pipex, pipex->argv[i], fd_firstchild);
