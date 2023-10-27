@@ -48,7 +48,8 @@ int	check_heredoc(t_struct *pipex)
 	char	*line;
 	int		fd1;
 
-	if (!ft_strncmp(pipex->argv[1], "here_doc", 8) && (ft_strlen(pipex->argv[1]) == 8))
+	if (!ft_strncmp(pipex->argv[1], "here_doc", 8)
+		&& (ft_strlen(pipex->argv[1]) == 8))
 	{
 		fd1 = open("tempo", O_WRONLY | O_CREAT | O_APPEND, 0644);
 		while (1)
