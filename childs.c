@@ -19,8 +19,9 @@ void	first_child(t_struct pipex, char *argv)
 	close(pipex.fd[0]);
 	dup2(pipex.fd[1], 1);
 	close(pipex.fd[1]);
-	if(!pipex.cmd_rute || !pipex.cmd_name)
-		return (free(pipex.cmd_rute), ft_free_pipex(pipex.cmd_name), exit(errno));
+	if (!pipex.cmd_rute || !pipex.cmd_name)
+		return (free(pipex.cmd_rute),
+			ft_free_pipex(pipex.cmd_name), exit(errno));
 	execve(pipex.cmd_rute, pipex.cmd_name, pipex.env);
 	errors(pipex.cmd_name[0]);
 	free(pipex.cmd_rute);
@@ -34,8 +35,9 @@ void	second_child(t_struct pipex, char *argv)
 	dup2(pipex.fd_txt[1], STDOUT_FILENO);
 	close(pipex.fd[1]);
 	close(pipex.fd[0]);
-	if(!pipex.cmd_rute || !pipex.cmd_name)
-		return (free(pipex.cmd_rute), ft_free_pipex(pipex.cmd_name), exit(errno));
+	if (!pipex.cmd_rute || !pipex.cmd_name)
+		return (free(pipex.cmd_rute),
+			ft_free_pipex(pipex.cmd_name), exit(errno));
 	execve(pipex.cmd_rute, pipex.cmd_name, pipex.env);
 	errors(pipex.cmd_name[0]);
 	free(pipex.cmd_rute);

@@ -37,7 +37,7 @@ typedef struct s_pipex
 	int		argc_mul;
 }	t_struct;
 
-void	parse(t_struct *pipex);
+void	parse(t_struct *pipex, char *cmd);
 char	*rute_parse(char *argv, t_struct *pipex);
 void	pipes(t_struct *pipex);
 void	first_child(t_struct pipex, char *argv);

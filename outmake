@@ -1,0 +1,27 @@
+total 200$
+drwxr-xr-x  26 bargarci  2019    884 Oct 27 14:21 .$
+drwxr-xr-x  18 bargarci  2019    612 Oct 25 18:14 ..$
+-rw-r--r--@  1 bargarci  2019   8196 Oct 27 08:11 .DS_Store$
+drwxr-xr-x  15 bargarci  2019    510 Oct 27 12:25 .git$
+-rw-r--r--   1 bargarci  2019     10 Oct 27 07:33 .gitignore$
+drwxr-xr-x   8 bargarci  2019    272 Oct 27 12:33 GNL$
+-rw-r--r--   1 bargarci  2019    923 Oct 27 05:23 Makefile$
+-rw-r--r--   1 bargarci  2019      8 Oct 16 14:45 README.md$
+-rw-r--r--   1 bargarci  2019   1799 Oct 27 14:18 childs.c$
+-rw-r--r--   1 bargarci  2019   1648 Oct 27 14:20 childs.o$
+drwxr-xr-x  18 bargarci  2019    612 Oct 27 12:33 ft_printf$
+drwxr-xr-x  93 bargarci  2019   3162 Oct 27 12:33 libft$
+-rw-r--r--   1 bargarci  2019   3185 Oct 27 14:16 main.c$
+-rw-r--r--   1 bargarci  2019   3408 Oct 27 14:20 main.o$
+-rw-r--r--   1 bargarci  2019   2700 Oct 27 14:19 multiples_childs.c$
+-rw-r--r--   1 bargarci  2019   2564 Oct 27 14:20 multiples_childs.o$
+-rw-r--r--   1 bargarci  2019   1843 Oct 27 03:23 multiples_pipes.c$
+-rw-r--r--   1 bargarci  2019   1944 Oct 27 12:33 multiples_pipes.o$
+-rw-r--r--   1 bargarci  2019   1539 Oct 27 14:05 out$
+-rw-r--r--   1 bargarci  2019      0 Oct 27 14:21 outmake$
+drwxr-xr-x   7 bargarci  2019    238 Oct 27 14:21 parse$
+-rwxr-xr-x   1 bargarci  2019  23600 Oct 27 14:21 pipex$
+-rw-r--r--   1 bargarci  2019   2470 Oct 27 07:50 pipex.h$
+-rw-r--r--   1 bargarci  2019    188 Oct 27 07:57 salida$
+-rw-r--r--   1 bargarci  2019   1611 Oct 27 07:57 utils.c$
+-rw-r--r--   1 bargarci  2019   1836 Oct 27 12:33 utils.o$

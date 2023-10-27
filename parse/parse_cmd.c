@@ -20,9 +20,12 @@ char	*search_cmd_name(char *argv)
 
 	i = 0;
 	do_split = ft_split(argv, '/');
+	if (!do_split)
+		return (0);
 	while (do_split[i])
 		i++;
-	cmd = do_split[i - 1];
+	cmd = ft_strdup(do_split[i - 1]);
+	ft_free_pipex(do_split);
 	return (cmd);
 }
 
@@ -37,14 +40,15 @@ void	rute_cmd(t_struct *pipex, char *argv)
 	{
 		cmd = search_cmd_name(argv);
 		if (!cmd)
-			return(free(cmd));
+			return (free(cmd));
 		pipex->cmd_name = ft_split(cmd, ' ');
+		free(cmd);
 	}
 	else
 		pipex->cmd_name = ft_split(argv, ' ');
 }
 
-void	parse(t_struct *pipex)
+void	parse(t_struct *pipex, char *cmd)
 {
 	int		i;
 
@@ -58,11 +62,13 @@ void	parse(t_struct *pipex)
 		}
 		i++;
 	}
+	if (!pipex->path)
+		errors_manual(cmd, ": No such file or directory");
 	pipex->rutes = ft_split(pipex->path + 5, ':');
 	if (!pipex->rutes)
 	{
 		ft_free_pipex(pipex->rutes);
-		exit(EXIT_FAILURE);
+		errors_manual("command not found", "\n");
 	}
 }
 
