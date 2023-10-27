@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../pipex.h"
+#include <stdlib.h>
 
 char	*search_cmd_name(char *argv)
 {
@@ -19,11 +20,6 @@ char	*search_cmd_name(char *argv)
 
 	i = 0;
 	do_split = ft_split(argv, '/');
-	if (!do_split)
-	{
-		ft_free_pipex(do_split);
-		return (0);
-	}
 	while (do_split[i])
 		i++;
 	cmd = do_split[i - 1];
@@ -40,22 +36,12 @@ void	rute_cmd(t_struct *pipex, char *argv)
 	if (absolut_rute(argv))
 	{
 		cmd = search_cmd_name(argv);
+		if (!cmd)
+			return(free(cmd));
 		pipex->cmd_name = ft_split(cmd, ' ');
-		if (!pipex->cmd_name)
-		{
-			ft_free_pipex(pipex->cmd_name);
-			return ;
-		}		
 	}
 	else
-	{
 		pipex->cmd_name = ft_split(argv, ' ');
-		if (!pipex->cmd_name)
-		{
-			ft_free_pipex(pipex->cmd_name);
-			return ;
-		}
-	}
 }
 
 void	parse(t_struct *pipex)
@@ -73,10 +59,10 @@ void	parse(t_struct *pipex)
 		i++;
 	}
 	pipex->rutes = ft_split(pipex->path + 5, ':');
-	if (!pipex->rutes)
+	if (pipex->rutes)
 	{
 		ft_free_pipex(pipex->rutes);
-		return ;
+		exit(EXIT_FAILURE);
 	}
 }
 

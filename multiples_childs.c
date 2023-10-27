@@ -32,12 +32,12 @@ void	first_child_mul(t_struct pipex, char *argv, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(pipex.fd_txt[0]);
 		close(fd[1]);
+		perror(pipex.cmd_name[0]);
+		exit(errno);
 		execve(pipex.cmd_rute, pipex.cmd_name, pipex.env);
 		errors(pipex.cmd_name[0]);
 		free(pipex.cmd_rute);
 		ft_free_pipex(pipex.cmd_name);
-		perror(pipex.cmd_name[0]);
-		exit(errno);
 	}
 }
 

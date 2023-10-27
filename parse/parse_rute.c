@@ -48,21 +48,12 @@ char	*find_rutes(t_struct *pipex, char **cmd)
 	while (pipex->rutes[i])
 	{
 		check = ft_strjoin(pipex->rutes[i], "/");
-		if (!check)
-		{
-			free(check);
-			return (0);
-		}
 		check = ft_strjoin(check, cmd[0]);
-		if (!check)
-		{
-			free(check);
-			return (0);
-		}
 		if (check_rute(check))
 			return (check);
 		i++;
 	}
+	ft_free_pipex(pipex->rutes);
 	return (0);
 }
 
@@ -100,10 +91,5 @@ char	*aux_noenv(char *cmd)
 	char	*check;
 
 	check = ft_strjoin("./", cmd);
-	if (!check)
-	{
-		free(check);
-		return (0);
-	}
 	return (check);
 }
