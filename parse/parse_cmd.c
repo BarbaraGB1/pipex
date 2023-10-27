@@ -59,7 +59,7 @@ void	parse(t_struct *pipex)
 		i++;
 	}
 	pipex->rutes = ft_split(pipex->path + 5, ':');
-	if (pipex->rutes)
+	if (!pipex->rutes)
 	{
 		ft_free_pipex(pipex->rutes);
 		exit(EXIT_FAILURE);
