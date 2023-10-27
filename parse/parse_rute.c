@@ -48,11 +48,9 @@ char	*find_rutes(t_struct *pipex, char **cmd)
 	i = 0;
 	while (pipex->rutes[i])
 	{	
-		temp = ft_strjoin(pipex->rutes[i], "/");
 		check = ft_strjoin(temp, cmd[0]);
 		if (check_rute(check))
 			return (check);
-		free(temp);
 		i++;
 	}
 	ft_free_pipex(pipex->rutes);
